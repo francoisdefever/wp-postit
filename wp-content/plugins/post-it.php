@@ -11,7 +11,14 @@ License URI:
 Text Domain:
 Domain Path:
 */
+function post_it_install(){
+    register_activation_hook();
+
+    register_deactivation_hook();
+}
+
 function post_it_create(){
+
 }
 
 function post_it_read(){
