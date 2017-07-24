@@ -11,3 +11,9 @@ License URI:
 Text Domain:
 Domain Path:
 */
+function post_it_create(){
+}
+
+function post_it_read(){
+
+}
