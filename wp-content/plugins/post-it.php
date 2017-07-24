@@ -11,14 +11,30 @@ License URI:
 Text Domain:
 Domain Path:
 */
-function post_it_install(){
-    register_activation_hook();
 
-    register_deactivation_hook();
+
+function post_it_install(){
+
 }
 
-function post_it_create(){
+function post_it_uninstall(){
 
+}
+
+/**
+ * Display Material
+ */
+function post_it_create(){
+    echo '
+    <div style="margin-top:30px;">
+    <form>
+    <h2>Ajouter un Post-it</h2><br>
+    <input style="margin-top:0px;" type="checkbox" name="" value="">
+    <input type="color" value="ff0000" name="textcolor"><br>
+    <textarea name="name" rows="6" cols="40"></textarea><br>
+    </form>
+    </div>
+        ';
 }
 
 function post_it_read(){
