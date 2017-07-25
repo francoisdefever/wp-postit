@@ -7,9 +7,12 @@ Version:     0.2
 Author:      François DEFEVER
 Author URI:  https://francoisdefever.com
 */
+
 header('Content-Type: text/plain');
+
 // Add metabox on Admin
 add_action('admin_init', 'consoPostIt_init_meta');
+add_action('admin_init', 'consoPostIt_render_meta');
 
 // Save Render Metabox
 add_action('save_post', 'consoPostIt_save_meta');
@@ -21,26 +24,74 @@ function consoPostIt_init_meta(){
     }
 }
 
+// Add Render Metabox Content (THIS IS THE POSTIT RENDER !)
+function consoPostIt_render_meta(){
+
+    add_meta_box('consoPostItTop', 'Attention, au Post it ! ;)', 'consoPostIt_top_render_metabox', 'post');
+    // if (fucntion_exists('consoPostIt_save_meta')){
+    // }
+}
+
 // Add Html Render in Metabox
 function consoPostIt_render_metabox(){
+    global $post;
+    // $checked = get_post_meta($post->ID, 'consoPostIt_check', true);
+    $colored = get_post_meta($post->ID, 'consoPostIt_textcolor', true);
+    $filled = get_post_meta($post->ID, 'consoPostIt_content', true);
+
     ?>
     <form>
-    <input type="checkbox" name="consoPostIt_check" value=true id='consoPostIt_check'>
-    <input type="color" value="#ff0000" name="consoPostIt_textcolor" id="consoPostIt_textcolor"><br>
-    <textarea style="width:100%;"name="consoPostIt_content" rows="6" id="consoPostIt_content"></textarea><br>
+    <!-- <input type="checkbox" name="consoPostIt_check" value='<?= $checked ?>' id='consoPostIt_check'> -->
+    <input type="color" value="<?= $colored ?>" name="consoPostIt_textcolor" id="consoPostIt_textcolor"><br>
+    <textarea style="width:100%;" value="<?= $filled ?>" name="consoPostIt_content" rows="6" id="consoPostIt_content"><?= $filled ?></textarea><br>
     </form>
     <?php
 }
 
-function consoPostIt_save_meta($post_id){
-        $meta = 'consoPostIt_check', 'consoPostIt_textcolor', 'consoPostIt_content';
-        $value = $_POST[$meta];
+// Add HTML Top Render Metabox
+function consoPostIt_top_render_metabox(){
+    global $post;
 
-    if (get_post_meta($post_id, $meta)) {
-        update_post_meta($post_id, $meta, $value);
-    } else if ($value === ''){
-        delete_post_meta($post_id, $meta)
+    $colored = get_post_meta($post->ID, 'consoPostIt_textcolor', true);
+    $filled = get_post_meta($post->ID, 'consoPostIt_content', true);
+
+    ?>
+        <div style="color:#FFFFFF;width:100%;">
+            <p style="color:#FFFFFF;background-color:<?= $colored ?>" ><?= $filled ?></p>
+        </div>
+    <?php
+
+}
+
+function consoPostIt_save_meta($post_id){
+
+    //SAVE CHECKBOX
+    // if (get_post_meta($post_id, 'consoPostIt_check')) {
+    //     update_post_meta($post_id, 'consoPostIt_check', $_POST['consoPostIt_check']);
+    // } else if ($_POST['consoPostIt_check'] === !true){
+    //     delete_post_meta($post_id, 'consoPostIt_check');
+    // } else {
+    //     add_post_meta($post_id, 'consoPostIt_check', $_POST['consoPostIt_check']);
+    // }
+
+
+
+    //SAVE COLOR PICKER
+    if (get_post_meta($post_id, 'consoPostIt_textcolor')) {
+        update_post_meta($post_id, 'consoPostIt_textcolor', $_POST['consoPostIt_textcolor']);
+    } else if ($_POST['consoPostIt_textcolor'] === ''){
+        delete_post_meta($post_id, 'consoPostIt_textcolor');
     } else {
-        add_post_meta($post_id, $meta, $value);
+        add_post_meta($post_id, 'consoPostIt_textcolor', $_POST['consoPostIt_textcolor']);
     }
+
+    //SAVE TEXT
+    if (get_post_meta($post_id, 'consoPostIt_content')) {
+        update_post_meta($post_id, 'consoPostIt_content', $_POST['consoPostIt_content']);
+    } else if ($_POST['consoPostIt_content'] === ''){
+        delete_post_meta($post_id, 'consoPostIt_content');
+    } else {
+        add_post_meta($post_id, 'consoPostIt_content', $_POST['consoPostIt_content']);
+    }
+
 }
