@@ -10,6 +10,7 @@ Author URI:  https://francoisdefever.com
 header('Content-Type: text/plain');
 // Add metabox on Admin
 add_action('admin_init', 'consoPostIt_init_meta');
+add_action('admin_init', 'consoPostIt_render_meta');
 
 // Save Render Metabox
 add_action('save_post', 'consoPostIt_save_meta');
@@ -19,6 +20,14 @@ function consoPostIt_init_meta(){
     if (function_exists('add_meta_box')){
         add_meta_box('consoPostIt', 'Ajouter un Post-it', 'consoPostIt_render_metabox', 'post');
     }
+}
+
+// Add Render Metabox Content (THIS IS THE POSTIT RENDER !)
+function consoPostIt_render_meta(){
+    global $post;
+    add_meta_box('consoPostItTop', 'Attention, un Post it à été laissé !', 'consoPostIt_top_render_metabox', 'post');
+    // if (get_post_meta($post->ID, 'consoPostIt_textcolor') || get_post_meta($post->ID, 'consoPostIt_content')  != empty()){
+    // }
 }
 
 // Add Html Render in Metabox
@@ -33,9 +42,7 @@ function consoPostIt_render_metabox(){
     print_r($filled);
     // print_r($post);
 
-
-
-    //!!!!!! NOT GOOD !!!!!!!! RELOAD META IN checkbox, Color and Text Area !!!!!! NOT GOOD !!!!!!!! 
+    //!!!!!! NOT GOOD !!!!!!!! RELOAD META IN checkbox, Color and Text Area !!!!!! NOT GOOD !!!!!!!!
     ?>
     <form>
     <input type="checkbox" name="consoPostIt_check" value='<?php true ?>' id='consoPostIt_check'>
@@ -43,6 +50,24 @@ function consoPostIt_render_metabox(){
     <textarea style="width:100%;" value="<?php $filled ?>" name="consoPostIt_content" rows="6" id="consoPostIt_content"></textarea><br>
     </form>
     <?php
+}
+
+// Add HTML Top Render Metabox
+function consoPostIt_top_render_metabox(){
+    global $post;
+
+    $colored = get_post_meta($post->ID, 'consoPostIt_textcolor', true);
+    $filled = get_post_meta($post->ID, 'consoPostIt_content', true);
+
+    print_r($colored);
+    print_r($filled);
+
+    ?>
+        <div style="color:#FFFFFF;width:100%;">
+            <p style="color:red;background-color:<?php $colored ?>" >bonjour<?php $filled ?></p>
+        </div>
+    <?php
+
 }
 
 function consoPostIt_save_meta($post_id){
