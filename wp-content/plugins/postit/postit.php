@@ -16,3 +16,13 @@ function consoPostIt_init_meta(){
         add_meta_box('consoPostIt', 'Ajouter un Post-it', 'consoPostIt_render_metabox', 'post');
     }
 }
+
+function consoPostIt_render_metabox(){
+    ?>
+    <form>
+    <input type="checkbox" name="consoPostIt_check" value="">
+    <input type="color" value="#ff0000" name="consoPostIt_textcolor"><br>
+    <textarea style="width:100%;"name="consoPostIt_content" rows="6"></textarea><br>
+    </form>
+    <?php
+}
