@@ -649,7 +649,6 @@ if ( post_type_supports($post_type, 'editor') ) {
 	</td>
 	<td id="content-resize-handle" class="hide-if-no-js"><br /></td>
 </tr></tbody></table>
-<?php post_it_create(); ?>
 
 </div>
 <?php }
