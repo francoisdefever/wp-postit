@@ -7,3 +7,12 @@ Version:     0.2
 Author:      François DEFEVER
 Author URI:  https://francoisdefever.com
 */
+
+// Add metabox on Admin
+add_action('admin_init', 'consoPostIt_init_meta');
+
+function consoPostIt_init_meta(){
+    if (function_exists('add_meta_box')){
+        add_meta_box('consoPostIt', 'Ajouter un Post-it', 'consoPostIt_render_metabox', 'post');
+    }
+}
