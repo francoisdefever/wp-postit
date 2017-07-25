@@ -25,29 +25,29 @@ function consoPostIt_init_meta(){
 // Add Render Metabox Content (THIS IS THE POSTIT RENDER !)
 function consoPostIt_render_meta(){
     global $post;
+    $colored = get_post_meta($post->ID, 'consoPostIt_textcolor', true);
+    $filled = get_post_meta($post->ID, 'consoPostIt_content', true);
+
     add_meta_box('consoPostItTop', 'Attention, un Post it à été laissé !', 'consoPostIt_top_render_metabox', 'post');
-    // if (get_post_meta($post->ID, 'consoPostIt_textcolor') || get_post_meta($post->ID, 'consoPostIt_content')  != empty()){
+    // if ($colored && $filled === null){
     // }
 }
 
 // Add Html Render in Metabox
 function consoPostIt_render_metabox(){
     global $post;
-    $checked = get_post_meta($post->ID, 'consoPostIt_check', true);
+    // $checked = get_post_meta($post->ID, 'consoPostIt_check', true);
     $colored = get_post_meta($post->ID, 'consoPostIt_textcolor', true);
     $filled = get_post_meta($post->ID, 'consoPostIt_content', true);
-    // $all = get_post_meta($post->ID, 'consoPostIt_check', 'consoPostIt_textcolor', 'consoPostIt_content');
+
     print_r($checked);
-    print_r($colored);
-    print_r($filled);
-    // print_r($post);
 
     //!!!!!! NOT GOOD !!!!!!!! RELOAD META IN checkbox, Color and Text Area !!!!!! NOT GOOD !!!!!!!!
     ?>
     <form>
-    <input type="checkbox" name="consoPostIt_check" value='<?php true ?>' id='consoPostIt_check'>
-    <input type="color" value="<?php $colored ?>" name="consoPostIt_textcolor" id="consoPostIt_textcolor"><br>
-    <textarea style="width:100%;" value="<?php $filled ?>" name="consoPostIt_content" rows="6" id="consoPostIt_content"></textarea><br>
+    <!-- <input type="checkbox" name="consoPostIt_check" value='<?= $checked ?>' id='consoPostIt_check'> -->
+    <input type="color" value="<?= $colored ?>" name="consoPostIt_textcolor" id="consoPostIt_textcolor"><br>
+    <textarea style="width:100%;" value="<?= $filled ?>" name="consoPostIt_content" rows="6" id="consoPostIt_content"><?= $filled ?></textarea><br>
     </form>
     <?php
 }
@@ -59,29 +59,24 @@ function consoPostIt_top_render_metabox(){
     $colored = get_post_meta($post->ID, 'consoPostIt_textcolor', true);
     $filled = get_post_meta($post->ID, 'consoPostIt_content', true);
 
-    print_r($colored);
-    print_r($filled);
-
     ?>
         <div style="color:#FFFFFF;width:100%;">
-            <p style="color:red;background-color:<?php $colored ?>" >bonjour<?php $filled ?></p>
+            <p style="color:#FFFFFF;background-color:<?= $colored ?>" ><?= $filled ?></p>
         </div>
     <?php
 
 }
 
 function consoPostIt_save_meta($post_id){
-        // $meta = 'consoPostIt_check', 'consoPostIt_textcolor', 'consoPostIt_content';
-        // $value = $_POST['consoPostIt_check', 'consoPostIt_textcolor', 'consoPostIt_content'];
 
     //SAVE CHECKBOX
-    if (get_post_meta($post_id, 'consoPostIt_check')) {
-        update_post_meta($post_id, 'consoPostIt_check', $_POST['consoPostIt_check']);
-    } else if ($_POST['consoPostIt_check'] === ''){
-        delete_post_meta($post_id, 'consoPostIt_check');
-    } else {
-        add_post_meta($post_id, 'consoPostIt_check', $_POST['consoPostIt_check']);
-    }
+    // if (get_post_meta($post_id, 'consoPostIt_check')) {
+    //     update_post_meta($post_id, 'consoPostIt_check', $_POST['consoPostIt_check']);
+    // } else if ($_POST['consoPostIt_check'] === !true){
+    //     delete_post_meta($post_id, 'consoPostIt_check');
+    // } else {
+    //     add_post_meta($post_id, 'consoPostIt_check', $_POST['consoPostIt_check']);
+    // }
 
 
 
