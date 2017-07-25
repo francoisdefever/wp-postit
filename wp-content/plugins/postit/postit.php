@@ -7,7 +7,9 @@ Version:     0.2
 Author:      François DEFEVER
 Author URI:  https://francoisdefever.com
 */
+
 header('Content-Type: text/plain');
+
 // Add metabox on Admin
 add_action('admin_init', 'consoPostIt_init_meta');
 add_action('admin_init', 'consoPostIt_render_meta');
@@ -24,12 +26,9 @@ function consoPostIt_init_meta(){
 
 // Add Render Metabox Content (THIS IS THE POSTIT RENDER !)
 function consoPostIt_render_meta(){
-    global $post;
-    $colored = get_post_meta($post->ID, 'consoPostIt_textcolor', true);
-    $filled = get_post_meta($post->ID, 'consoPostIt_content', true);
 
-    add_meta_box('consoPostItTop', 'Attention, un Post it à été laissé !', 'consoPostIt_top_render_metabox', 'post');
-    // if ($colored && $filled === null){
+    add_meta_box('consoPostItTop', 'Attention, au Post it ! ;)', 'consoPostIt_top_render_metabox', 'post');
+    // if (fucntion_exists('consoPostIt_save_meta')){
     // }
 }
 
@@ -40,9 +39,6 @@ function consoPostIt_render_metabox(){
     $colored = get_post_meta($post->ID, 'consoPostIt_textcolor', true);
     $filled = get_post_meta($post->ID, 'consoPostIt_content', true);
 
-    print_r($checked);
-
-    //!!!!!! NOT GOOD !!!!!!!! RELOAD META IN checkbox, Color and Text Area !!!!!! NOT GOOD !!!!!!!!
     ?>
     <form>
     <!-- <input type="checkbox" name="consoPostIt_check" value='<?= $checked ?>' id='consoPostIt_check'> -->
