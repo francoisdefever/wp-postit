@@ -11,9 +11,35 @@ License URI:
 Text Domain:
 Domain Path:
 */
-function post_it_create(){
+
+
+function post_it_install(){
+
 }
 
-function post_it_read(){
+function post_it_uninstall(){
 
+}
+
+/**
+ * Display Material to add a Post-it
+ */
+function post_it_create(){
+    echo '
+    <div style="margin-top:30px;">
+    <form>
+    <h2>Ajouter un Post-it</h2><br>
+    <input style="margin-top:0px;" type="checkbox" name="Post-it" value="">
+    <input type="color" value="#ff0000" name="Post-it-textcolor"><br>
+    <textarea name="Post-it-area" rows="6" cols="40"></textarea><br>
+    </form>
+    </div>
+        ';
+}
+
+/**
+ * Read the Post-it on the Post
+ */
+function post_it_read(){
+    $postit = new wp_query("post_type=post");
 }
