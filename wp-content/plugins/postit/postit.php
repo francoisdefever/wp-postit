@@ -26,7 +26,6 @@ function consoPostIt_init_meta(){
 
 // Add Render Metabox Content (THIS IS THE POSTIT RENDER !)
 function consoPostIt_render_meta(){
-
     add_meta_box('consoPostItTop', 'Attention, au Post it ! ;)', 'consoPostIt_top_render_metabox', 'post');
     // if (fucntion_exists('consoPostIt_save_meta')){
     // }
